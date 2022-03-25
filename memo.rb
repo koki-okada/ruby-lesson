@@ -7,28 +7,26 @@ if input_number == 1
   puts "----------------------------"
   puts "拡張子を除いたファイル名を入力してください"
   puts "----------------------------"
-  input_filename = gets.to_s
-  filename = input_filename.chomp
+  input_filename = gets.to_s.chomp
   
   puts "----------------------------"
   puts "メモを入力してください"
-  puts "完了したらEnterを押します"
+  puts "完了したらctrl + dを押します"
   puts "----------------------------"
-  input_memo = gets.to_s
-  memo = input_memo.chomp
+  input_memo = readlines.to_s
   
   puts "以下の内容でメモを登録しました"
   puts "----------------------------"
-  puts "ファイル名:#{filename}"
+  puts "ファイル名:#{input_filename}"
   puts "----------------------------"
-  puts "内容:#{memo}"
+  puts "内容:#{input_memo}"
   puts "----------------------------"
   
-  csv_name = "#{filename}.csv"
+  csv_name = "#{input_filename}.csv"
   
   CSV.open(csv_name,'w', :force_quotes => true) do |csv|
-    csv << [filename]        ##ヘッダ
-    csv << [memo]           ##データ１行目
+    csv << [input_filename]        ##ヘッダ
+    csv << [input_memo]           ##データ１行目
   end
   
 elsif input_number == 2
@@ -57,21 +55,20 @@ elsif input_number == 2
   puts "拡張子を除いたファイル名を入力してください"
   puts "----------------------------"
   
-  filename = gets.to_s
-  after_filename = filename.chomp
+  filename = gets.to_s.chomp
 
   puts "----------------------------"
   puts "メモを入力してください"
-  puts "完了したらEnterを押します"
+  puts "完了したらctrl + dを押します"
   puts "----------------------------"
   memo = gets.to_s
-  after_memo = memo.chomp
   
   CSV.open(edit_memo,'w', :force_quotes => true) do |csv|
-    csv << [after_filename]        ##ヘッダ
-    csv << [after_memo]           ##データ１行目
+    csv << [filename]        ##ヘッダ
+    csv << [memo]           ##データ１行目
   end
   
+  puts "/n"
   puts "----------------------------"
   puts "メモの編集に成功しました"
   puts "----------------------------"
