@@ -7,13 +7,13 @@ if input_number == 1
   puts "----------------------------"
   puts "拡張子を除いたファイル名を入力してください"
   puts "----------------------------"
-  input_filename = gets.to_s.chomp
+  input_filename = gets.chomp.to_s
   
   puts "----------------------------"
   puts "メモを入力してください"
   puts "完了したらctrl + dを押します"
   puts "----------------------------"
-  input_memo = readlines.to_s
+  input_memo = readlines.map &:chomp
   
   puts "以下の内容でメモを登録しました"
   puts "----------------------------"
@@ -25,7 +25,6 @@ if input_number == 1
   csv_name = "#{input_filename}.csv"
   
   CSV.open(csv_name,'w', :force_quotes => true) do |csv|
-    csv << [input_filename]        ##ヘッダ
     csv << [input_memo]           ##データ１行目
   end
   
@@ -50,21 +49,15 @@ elsif input_number == 2
   
   edit_no = gets.to_i
   edit_memo = memo_list[edit_no]
-  
-  puts "----------------------------"
-  puts "拡張子を除いたファイル名を入力してください"
-  puts "----------------------------"
-  
-  filename = gets.to_s.chomp
 
   puts "----------------------------"
   puts "メモを入力してください"
   puts "完了したらctrl + dを押します"
   puts "----------------------------"
-  memo = gets.to_s
+  
+  memo = readlines.map &:chomp
   
   CSV.open(edit_memo,'w', :force_quotes => true) do |csv|
-    csv << [filename]        ##ヘッダ
     csv << [memo]           ##データ１行目
   end
   
@@ -72,7 +65,6 @@ elsif input_number == 2
   puts "----------------------------"
   puts "メモの編集に成功しました"
   puts "----------------------------"
-  
   
   CSV.foreach(edit_memo) do |f|
    print f
